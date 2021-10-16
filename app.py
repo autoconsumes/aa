@@ -1,0 +1,61 @@
+# -*- coding: utf-8 -*-
+import os
+from plotly.tools import mpl_to_plotly
+import dash
+from dash import dcc
+from dash import html
+from dash.dependencies import Input, Output
+from pages import (
+    overview,
+    # pricePerformance,
+    portfolioManagement,
+    feesMins,
+    distributions,
+    newsReviews,
+)
+from pips import *
+
+app = dash.Dash(
+    __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}],
+)
+app.title = "Sistema FV"
+server = app.server
+
+# Describe the layout/ UI of the app
+app.layout = html.Div(
+    [dcc.Location(id="url", refresh=False), html.Div(id="page-content")]
+)
+
+# Update page
+@app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+def display_page(pathname):
+    if pathname == "/dash-financial-report/XXXX":
+        return XXXX.create_layout(app)
+    # elif pathname == "/dash-financial-report/price-performance":
+    #     return pricePerformance.create_layout(app)
+    elif pathname == "/dash-financial-report/portfolio-management":
+        return portfolioManagement.create_layout(app)
+    elif pathname == "/dash-financial-report/fees":
+        return feesMins.create_layout(app)
+    elif pathname == "/dash-financial-report/distributions":
+        return distributions.create_layout(app)
+    elif pathname == "/dash-financial-report/news-and-reviews":
+        return newsReviews.create_layout(app)
+    elif pathname == "/dash-financial-report/full-view":
+        return (
+            overview.create_layout(app),
+            pricePerformance.create_layout(app),
+            portfolioManagement.create_layout(app),
+            feesMins.create_layout(app),
+            distributions.create_layout(app),
+            newsReviews.create_layout(app),
+        )
+    else:
+        return overview.create_layout(app)
+
+
+if __name__ == "__main__":
+    app.run_server(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+
+    # app.run_server(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    # app.run_server(debug=True, host="0.0.0.0", port='8888')

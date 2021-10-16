@@ -1,0 +1,16 @@
+dash
+gunicorn
+# zappa
+pandas
+numpy_financial
+# flask
+matplotlib
+geopy
+openpyxl
+# xlsxwriter
+XlsxWriter==0.7.3
+windrose
+calmap
+xlrd==1.2.0 # ojo que versines posteriores no funciona
+geopandas
+scipy
